@@ -1,0 +1,10 @@
+<h1>Todos os Eventos</h1>
+<a href="{% url 'lista_organizadores' %}">Ver Organizadores</a>
+<ul>
+    {% for evento in eventos %}
+        <li>
+            <a href="{% url 'detalhe_evento' evento.id %}">{{ evento.titulo }}</a> 
+            - {{ evento.data_evento }}
+        </li>
+    {% endfor %}
+</ul>

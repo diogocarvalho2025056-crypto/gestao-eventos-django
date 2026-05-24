@@ -1,0 +1,7 @@
+<h1>Lista de Organizadores</h1>
+<ul>
+    {% for org in organizadores %}
+        <li>{{ org.nome }} - {{ org.email }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'lista_eventos' %}">Voltar aos eventos</a>
