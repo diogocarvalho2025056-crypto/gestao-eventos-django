@@ -1,18 +1,23 @@
-FROM python:3.10-slim
+# Vai buscar uma imagem de python na versao 3
+FROM python:3 AS base
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Define onde a pasta que vai ser utilizada dentro do Container
+WORKDIR /usr/src/app
 
-WORKDIR /app
+# Copia tudo desta pasta para dentro da pasta WORKDIR dentro do Container
+COPY loja-online .
+COPY requirements.txt .
 
-# Instalar dependências de sistema para o MySQL
-RUN apt-get update && apt-get install -y \
-    default-libmysqlclient-dev \
-    pkg-config \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Corre o comando necessário para atualizar o pip
+RUN pip install --upgrade pip 
 
-COPY requirements.txt /app/
+# Instala todas as dependências do projeto
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app/
+# Expõem a porta 8000 de dentro do Container para fora
+EXPOSE 8000
+
+RUN python manage.py collectstatic --noinput
+
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "website.wsgi"]
