@@ -1,0 +1,20 @@
+{% extends 'app_eventos/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Criar Novo Evento</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success w-100 mt-3">Guardar Evento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

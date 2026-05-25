@@ -1,10 +1,21 @@
-<h1>Todos os Eventos</h1>
-<a href="{% url 'lista_organizadores' %}">Ver Organizadores</a>
-<ul>
+{% extends 'app_eventos/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Próximos Eventos</h2>
+<div class="row">
     {% for evento in eventos %}
-        <li>
-            <a href="{% url 'detalhe_evento' evento.id %}">{{ evento.titulo }}</a> 
-            - {{ evento.data_evento }}
-        </li>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ evento.titulo }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ evento.data }}</h6>
+                <p class="card-text">{{ evento.descricao|truncatewords:15 }}</p>
+                <a href="{% url 'detalhe_evento' evento.id %}" class="btn btn-outline-primary btn-sm">Ver Detalhes</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">Ainda não existem eventos. Vai ao menu e cria um!</div>
     {% endfor %}
-</ul>
+</div>
+{% endblock %}
